@@ -200,10 +200,6 @@ npm run build
 │   ├── factories/        # Model factories (Pest/Faker)
 │   ├── migrations/       # Database migrations
 │   └── seeders/          # Database seeders
-├── docs/                 # Project documentation
-│   ├── api-specs.md      # Full API specification
-│   ├── frontend-prompt.md # Frontend workflow requirements
-│   └── tech-stack.md     # Frontend tech stack guidelines
 ├── routes/
 │   ├── api.php           # API route definitions
 │   └── web.php           # Web routes (serves the SPA)
@@ -234,14 +230,6 @@ Uses [Pest PHP](https://pestphp.com/) for elegant, readable tests. Run specific 
 ```bash
 php artisan test --filter=EventTest
 ```
-
----
-
-## Documentation
-
-- [API Specification](docs/api-specs.md) — Complete endpoint reference with request/response schemas
-- [Frontend Workflow](docs/frontend-prompt.md) — Detailed workflow description for the frontend
-- [Tech Stack](docs/tech-stack.md) — Frontend technology choices and conventions
 
 ---
 
