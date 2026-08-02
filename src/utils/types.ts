@@ -6,6 +6,7 @@ export interface Event {
   id: number;
   name: string;
   description: string | null;
+  csv_column_aliases?: Record<string, string>;
   registrations_count?: number;
   sessions_count?: number;
   created_at: string;
