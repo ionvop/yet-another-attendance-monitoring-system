@@ -131,35 +131,20 @@ php artisan key:generate
 
 # Run migrations
 php artisan migrate
-
-# (Optional) Seed with sample data
-php artisan db:seed
 ```
 
 ### Development
 
-Run all services concurrently:
+Run the development server:
 
 ```bash
-composer run dev
-```
-
-This starts:
-- **Laravel dev server** on `http://localhost:8000`
-- **Vite dev server** with HMR for the React frontend
-- **Queue worker** for background jobs
-
-Or run them individually:
-
-```bash
-php artisan serve              # Backend
-npm run dev                    # Frontend (Vite with HMR)
-```
-
-### Building for Production
-
-```bash
+# Build frontend assets
 npm run build
+
+# Run development server
+php artisan serve
+
+# The system is now accessible at http://localhost:8000
 ```
 
 ---
