@@ -8,11 +8,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'description'])]
+#[Fillable(['name', 'description', 'csv_column_aliases'])]
 class Event extends Model
 {
     /** @use HasFactory<EventFactory> */
     use HasFactory;
+
+    protected function casts(): array
+    {
+        return [
+            'csv_column_aliases' => 'array',
+        ];
+    }
     public function registrations(): HasMany
     {
         return $this->hasMany(Registration::class);
