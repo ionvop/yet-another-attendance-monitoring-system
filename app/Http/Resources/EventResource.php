@@ -13,6 +13,7 @@ class EventResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'csv_column_aliases' => $this->csv_column_aliases ?? [],
             'registrations_count' => $this->whenCounted('registrations'),
             'sessions_count' => $this->whenCounted('sessions'),
             'created_at' => $this->created_at,
