@@ -69,7 +69,8 @@ export default function CsvImportDialog({ onImportComplete }: Props) {
           <DialogTitle>Import Registrations</DialogTitle>
           <DialogDescription>
             Upload a CSV file exported from Google Forms. Expected columns: Timestamp, Student ID,
-            First Name, Last Name, Year Level, Course.
+            First Name, Last Name, Year Level, Course. You can configure custom column name aliases
+            in the event settings.
           </DialogDescription>
         </DialogHeader>
 
