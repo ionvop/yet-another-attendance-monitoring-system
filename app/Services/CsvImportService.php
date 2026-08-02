@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 
 class CsvImportService
 {
-    public function import(Event $event, UploadedFile $file, string $mode = 'insert_only'): array
+    public function import(Event $event, UploadedFile $file, string $mode = 'insert_only', array $columnAliases = []): array
     {
         $result = [
             'imported' => 0,
@@ -37,9 +37,9 @@ class CsvImportService
         $headers = array_map(fn ($h) => strtolower(trim($h)), $headers);
 
         // Normalize known header aliases to their canonical name
-        $headerAliases = [
-            'student id number' => 'student id'
-        ];
+        $headerAliases = array_merge([
+            'student id number' => 'student id',
+        ], $columnAliases);
 
         $headers = array_map(fn ($h) => $headerAliases[$h] ?? $h, $headers);
         $headerMap = array_flip($headers);
