@@ -35,6 +35,13 @@ class CsvImportService
 
         // Map header names to column indices (case-insensitive, trim whitespace)
         $headers = array_map(fn ($h) => strtolower(trim($h)), $headers);
+
+        // Normalize known header aliases to their canonical name
+        $headerAliases = [
+            'student id number' => 'student id'
+        ];
+
+        $headers = array_map(fn ($h) => $headerAliases[$h] ?? $h, $headers);
         $headerMap = array_flip($headers);
 
         $expectedHeaders = ['timestamp', 'student id', 'first name', 'last name', 'year level', 'course'];
