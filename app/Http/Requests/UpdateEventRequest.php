@@ -11,6 +11,8 @@ class UpdateEventRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'csv_column_aliases' => ['nullable', 'array'],
+            'csv_column_aliases.*' => ['string', 'max:255'],
         ];
     }
 }
