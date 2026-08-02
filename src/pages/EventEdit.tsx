@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
+import CsvAliasEditor from "@/components/CsvAliasEditor";
 import type { Event, ApiResponse } from "@/utils/types";
 
 export default function EventEdit() {
@@ -14,6 +16,7 @@ export default function EventEdit() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [csvColumnAliases, setCsvColumnAliases] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState<Record<string, string[]>>({});
@@ -23,6 +26,7 @@ export default function EventEdit() {
       .then((res) => {
         setName(res.data.name);
         setDescription(res.data.description || "");
+        setCsvColumnAliases(res.data.csv_column_aliases || {});
       })
       .catch(() => {
         toast.error("Event not found");
@@ -36,7 +40,13 @@ export default function EventEdit() {
     setSaving(true);
     setErrors({});
     try {
-      await api.put<ApiResponse<Event>>(`/events/${eventId}`, { name, description: description || null });
+      await api.put<ApiResponse<Event>>(`/events/${eventId}`, {
+        name,
+        description: description || null,
+        csv_column_aliases: Object.fromEntries(
+          Object.entries(csvColumnAliases).filter(([key]) => key.trim() !== "")
+        ),
+      });
       toast.success("Event updated");
       navigate(`/events/${eventId}`);
     } catch (err: any) {
@@ -113,6 +123,26 @@ export default function EventEdit() {
               </Button>
             </div>
           </form>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>CSV Column Aliases</CardTitle>
+          <CardDescription>
+            Configure alternative column names for CSV imports. When uploading a CSV, headers matching
+            these aliases will be mapped to the expected column names.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <CsvAliasEditor
+            aliases={csvColumnAliases}
+            onChange={setCsvColumnAliases}
+            disabled={saving}
+          />
+          {errors.csv_column_aliases && (
+            <p className="text-sm text-destructive mt-2">{errors.csv_column_aliases[0]}</p>
+          )}
         </CardContent>
       </Card>
     </div>
