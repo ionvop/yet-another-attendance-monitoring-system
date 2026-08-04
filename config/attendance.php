@@ -56,7 +56,6 @@ return [
 
     'csv' => [
         'max_file_size' => 5120, // KB (5 MB)
-        'expected_headers' => ['Timestamp', 'Student ID', 'First Name', 'Last Name', 'Year Level', 'Course'],
     ],
 
     /*
