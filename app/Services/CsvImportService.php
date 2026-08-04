@@ -10,7 +10,9 @@ use Illuminate\Validation\Rule;
 
 class CsvImportService
 {
-    public function import(Event $event, UploadedFile $file, string $mode = 'insert_only', array $columnAliases = []): array
+    private const REQUIRED_HEADERS = ['student id', 'first name', 'last name', 'year level', 'course'];
+
+    public function import(Event $event, UploadedFile $file, string $mode = 'insert_only', array $columnMapping = []): array
     {
         $result = [
             'imported' => 0,
@@ -21,35 +23,20 @@ class CsvImportService
             'failed_rows' => [],
         ];
 
+        // Validate that all required headers have a mapping
+        foreach (self::REQUIRED_HEADERS as $header) {
+            if (! isset($columnMapping[$header]) || $columnMapping[$header] === null) {
+                return $result;
+            }
+        }
+
         $handle = fopen($file->getRealPath(), 'r');
         if (! $handle) {
             return $result;
         }
 
-        // Read header row
-        $headers = fgetcsv($handle);
-        if (! $headers) {
-            fclose($handle);
-            return $result;
-        }
-
-        // Map header names to column indices (case-insensitive, trim whitespace)
-        $headers = array_map(fn ($h) => strtolower(trim($h)), $headers);
-
-        // Normalize known header aliases to their canonical name
-        $headerAliases = array_merge([
-            'student id number' => 'student id',
-        ], $columnAliases);
-
-        $headers = array_map(fn ($h) => $headerAliases[$h] ?? $h, $headers);
-        $headerMap = array_flip($headers);
-
-        $expectedHeaders = ['timestamp', 'student id', 'first name', 'last name', 'year level', 'course'];
-        $missingHeaders = array_diff($expectedHeaders, $headers);
-        if (! empty($missingHeaders)) {
-            fclose($handle);
-            return $result;
-        }
+        // Skip header row
+        fgetcsv($handle);
 
         $rowNumber = 1; // header is row 1, data starts at row 2
 
@@ -61,7 +48,7 @@ class CsvImportService
                 continue;
             }
 
-            $data = $this->mapRow($row, $headerMap);
+            $data = $this->mapRow($row, $columnMapping);
 
             // Validate the row
             $validator = Validator::make($data, $this->validationRules($event));
@@ -106,9 +93,11 @@ class CsvImportService
         return $result;
     }
 
-    private function mapRow(array $row, array $headerMap): array
+    private function mapRow(array $row, array $columnMapping): array
     {
-        $get = fn (string $header) => $row[$headerMap[$header]] ?? null;
+        $get = fn (string $header) => isset($columnMapping[$header]) && $columnMapping[$header] !== null
+            ? ($row[$columnMapping[$header]] ?? null)
+            : null;
 
         $registeredAt = $get('timestamp');
         if ($registeredAt && ($ts = strtotime($registeredAt))) {
