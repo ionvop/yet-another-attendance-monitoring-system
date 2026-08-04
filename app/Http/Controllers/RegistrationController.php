@@ -77,7 +77,8 @@ class RegistrationController extends Controller
     public function import(ImportRegistrationsRequest $request, Event $event, CsvImportService $service): JsonResponse
     {
         $mode = $request->input('mode', 'insert_only');
-        $result = $service->import($event, $request->file('file'), $mode, $event->csv_column_aliases ?? []);
+        $mapping = json_decode($request->input('mapping', '{}'), true);
+        $result = $service->import($event, $request->file('file'), $mode, $mapping);
 
         return response()->json([
             'data' => [
