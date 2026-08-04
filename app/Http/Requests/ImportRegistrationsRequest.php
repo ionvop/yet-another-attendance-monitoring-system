@@ -11,6 +11,7 @@ class ImportRegistrationsRequest extends FormRequest
         return [
             'file' => ['required', 'file', 'mimetypes:text/csv,text/plain', 'max:5120'],
             'mode' => ['nullable', 'string', 'in:insert_only,upsert'],
+            'mapping' => ['required', 'string', 'json'],
         ];
     }
 }
