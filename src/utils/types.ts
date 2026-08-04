@@ -133,6 +133,9 @@ export interface ImportResponse {
   failed_rows: FailedRow[];
 }
 
+/** Maps expected header names to 0-based CSV column indices (null = skip/unmapped). */
+export type CsvHeaderMapping = Record<string, number | null>;
+
 // ============================================================
 // Report
 // ============================================================
