@@ -195,4 +195,5 @@ export const COURSES = [
   "BSCE",
   "BSME",
   "BSEE",
+  "BSMA",
 ] as const;
