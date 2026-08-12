@@ -43,6 +43,7 @@ return [
         'BSCE',
         'BSME',
         'BSEE',
+        'BSMA',
     ],
 
     /*
