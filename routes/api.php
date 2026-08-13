@@ -15,6 +15,7 @@ Route::prefix('v1')->group(function () {
     // Registrations (nested under events)
     Route::prefix('events/{event}')->group(function () {
         Route::post('registrations/import', [RegistrationController::class, 'import']);
+        Route::get('registrations/export', [RegistrationController::class, 'export']);
         Route::apiResource('registrations', RegistrationController::class)->except(['index']);
         Route::get('registrations', [RegistrationController::class, 'index']);
 
