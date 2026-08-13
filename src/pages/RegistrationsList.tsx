@@ -1,11 +1,11 @@
 import { useState, useCallback, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Upload, UserPlus } from "lucide-react";
+import { ArrowLeft, Download, Upload, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import RegistrationTable from "@/components/RegistrationTable";
 import CsvImportDialog from "@/components/CsvImportDialog";
-import { api } from "@/lib/api";
+import { api, BASE_URL } from "@/lib/api";
 import { toast } from "sonner";
 import type { Registration, ApiResponse, PaginationMeta } from "@/utils/types";
 
@@ -43,6 +43,16 @@ export default function RegistrationsList() {
     fetchRegistrations();
   }, [fetchRegistrations]);
 
+  const handleExport = () => {
+    const params = new URLSearchParams();
+    if (search) params.set("search", search);
+    if (yearLevel !== "all") params.set("year_level", yearLevel);
+    if (course !== "all") params.set("course", course);
+    const url = `${BASE_URL}/events/${eventId}/registrations/export${params.toString() ? "?" + params.toString() : ""}`;
+    window.open(url, "_blank");
+    toast.success("Export started");
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -61,6 +71,10 @@ export default function RegistrationsList() {
         </div>
         <div className="flex gap-2">
           <CsvImportDialog onImportComplete={fetchRegistrations} />
+          <Button variant="outline" onClick={handleExport}>
+            <Download className="h-4 w-4 mr-2" />
+            Export CSV
+          </Button>
           <Button asChild>
             <Link to={`/events/${eventId}/registrations/new`}>
               <UserPlus className="h-4 w-4 mr-2" />
