@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RegistrationsExport;
 use App\Http\Requests\ImportRegistrationsRequest;
 use App\Http\Requests\StoreRegistrationRequest;
 use App\Http\Requests\UpdateRegistrationRequest;
@@ -11,6 +12,8 @@ use App\Models\Registration;
 use App\Services\CsvImportService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class RegistrationController extends Controller
 {
@@ -72,6 +75,17 @@ class RegistrationController extends Controller
         $registration->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function export(Event $event): BinaryFileResponse
+    {
+        $filters = request()->only(['search', 'year_level', 'course']);
+
+        return Excel::download(
+            new RegistrationsExport($event, $filters),
+            'registrations-' . \Illuminate\Support\Str::slug($event->name) . '-' . now()->format('Y-m-d') . '.csv',
+            \Maatwebsite\Excel\Excel::CSV
+        );
     }
 
     public function import(ImportRegistrationsRequest $request, Event $event, CsvImportService $service): JsonResponse
