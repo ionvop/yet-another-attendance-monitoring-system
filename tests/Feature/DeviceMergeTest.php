@@ -13,7 +13,7 @@ function devicePayload(array $overrides = []): array
         'event' => ['name' => 'Orientation'],
         'exported_at' => '2026-08-01T07:00:00+00:00',
         'sessions' => [
-            ['name' => 'Morning', 'start_time' => '2026-08-01T07:00:00+00:00', 'end_time' => '2026-08-01T12:00:00+00:00'],
+            ['name' => 'Morning', 'start_time' => '2026-08-01T07:00:00+00:00'],
         ],
         'registrations' => [
             ['student_id' => '123456', 'first_name' => 'John', 'last_name' => 'Doe', 'year_level' => '1st year', 'course' => 'BSCS', 'registered_at' => '2026-07-20T10:00:00+00:00'],
@@ -81,7 +81,7 @@ test('merge auto-creates unknown session when mapped to create', function () {
 
     $payload = devicePayload([
         'sessions' => [
-            ['name' => 'Morning', 'start_time' => '2026-08-01T07:00:00+00:00', 'end_time' => '2026-08-01T12:00:00+00:00'],
+            ['name' => 'Morning', 'start_time' => '2026-08-01T07:00:00+00:00'],
         ],
         'registrations' => [
             ['student_id' => '123456', 'first_name' => 'John', 'last_name' => 'Doe', 'year_level' => '1st year', 'course' => 'BSCS'],
