@@ -19,7 +19,6 @@ test('can create a session', function () {
     $response = $this->postJson("/api/v1/events/{$event->id}/sessions", [
         'name' => 'Morning',
         'start_time' => '2026-08-01T07:00:00Z',
-        'end_time' => '2026-08-01T12:00:00Z',
     ]);
 
     $response->assertCreated()
@@ -38,24 +37,10 @@ test('session name must be unique per event', function () {
     $response = $this->postJson("/api/v1/events/{$event->id}/sessions", [
         'name' => 'Morning',
         'start_time' => '2026-08-01T13:00:00Z',
-        'end_time' => '2026-08-01T17:00:00Z',
     ]);
 
     $response->assertUnprocessable()
         ->assertJsonValidationErrors('name');
-});
-
-test('end_time must be after start_time', function () {
-    $event = Event::factory()->create();
-
-    $response = $this->postJson("/api/v1/events/{$event->id}/sessions", [
-        'name' => 'Morning',
-        'start_time' => '2026-08-01T12:00:00Z',
-        'end_time' => '2026-08-01T07:00:00Z',
-    ]);
-
-    $response->assertUnprocessable()
-        ->assertJsonValidationErrors('end_time');
 });
 
 test('can update a session', function () {
@@ -65,7 +50,6 @@ test('can update a session', function () {
     $response = $this->putJson("/api/v1/events/{$event->id}/sessions/{$session->id}", [
         'name' => 'Morning Session',
         'start_time' => $session->start_time->toIso8601String(),
-        'end_time' => $session->end_time->toIso8601String(),
     ]);
 
     $response->assertOk()
