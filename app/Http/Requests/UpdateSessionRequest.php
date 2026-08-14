@@ -21,7 +21,6 @@ class UpdateSessionRequest extends FormRequest
                     ->ignore($session->id),
             ],
             'start_time' => ['required', 'date'],
-            'end_time' => ['required', 'date', 'after:start_time'],
         ];
     }
 }
