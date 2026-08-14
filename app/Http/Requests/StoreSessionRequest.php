@@ -17,7 +17,6 @@ class StoreSessionRequest extends FormRequest
                 Rule::unique('event_sessions')->where('event_id', $this->route('event')->id),
             ],
             'start_time' => ['required', 'date'],
-            'end_time' => ['required', 'date', 'after:start_time'],
         ];
     }
 }
