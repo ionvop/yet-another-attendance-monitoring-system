@@ -52,7 +52,7 @@ View attendance summaries in-app and export them as **Excel (.xlsx)** files with
 Event
  ├── has many → Registration (student_id, first_name, last_name, year_level, course)
  │                └── has many → Attendance (recorded_at)
- └── has many → EventSession (name, start_time, end_time)
+ └── has many → EventSession (name, start_time)
                   └── has many → Attendance (recorded_at)
 ```
 
