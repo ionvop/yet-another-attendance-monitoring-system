@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Exports\AttendanceExport;
+use App\Exports\MergedAttendanceExport;
+use App\Http\Requests\MergeReportsRequest;
 use App\Models\Event;
 use App\Models\EventSession;
 use App\Models\Registration;
+use App\Services\ReportMergeService;
 use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -75,6 +78,16 @@ class ReportController extends Controller
         return Excel::download(
             new AttendanceExport($event, (array) $sessionIds),
             'attendance-' . \Illuminate\Support\Str::slug($event->name) . '-' . now()->format('Y-m-d') . '.xlsx'
+        );
+    }
+
+    public function merge(MergeReportsRequest $request, Event $event, ReportMergeService $service): BinaryFileResponse
+    {
+        $merged = $service->merge($request->file('files'));
+
+        return Excel::download(
+            new MergedAttendanceExport($event->name, $merged['sessions'], $merged['rows']),
+            'merged-attendance-' . \Illuminate\Support\Str::slug($event->name) . '-' . now()->format('Y-m-d') . '.xlsx'
         );
     }
 }
