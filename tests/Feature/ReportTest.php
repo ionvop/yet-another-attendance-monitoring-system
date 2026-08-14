@@ -7,8 +7,8 @@ use App\Models\Registration;
 
 test('attendance report returns correct structure', function () {
     $event = Event::factory()->create(['name' => 'Orientation']);
-    $morning = EventSession::factory()->for($event)->create(['name' => 'Morning', 'start_time' => now()->setTime(7, 0), 'end_time' => now()->setTime(12, 0)]);
-    $afternoon = EventSession::factory()->for($event)->create(['name' => 'Afternoon', 'start_time' => now()->setTime(13, 0), 'end_time' => now()->setTime(17, 0)]);
+    $morning = EventSession::factory()->for($event)->create(['name' => 'Morning', 'start_time' => now()->setTime(7, 0)]);
+    $afternoon = EventSession::factory()->for($event)->create(['name' => 'Afternoon', 'start_time' => now()->setTime(13, 0)]);
 
     $reg1 = Registration::factory()->for($event)->create(['student_id' => '111', 'first_name' => 'Alice', 'last_name' => 'Alpha']);
     $reg2 = Registration::factory()->for($event)->create(['student_id' => '222', 'first_name' => 'Bob', 'last_name' => 'Beta']);
@@ -33,8 +33,8 @@ test('attendance report returns correct structure', function () {
 
 test('attendance report can filter by session_ids', function () {
     $event = Event::factory()->create();
-    $morning = EventSession::factory()->for($event)->create(['name' => 'Morning', 'start_time' => now()->setTime(7, 0), 'end_time' => now()->setTime(12, 0)]);
-    $afternoon = EventSession::factory()->for($event)->create(['name' => 'Afternoon', 'start_time' => now()->setTime(13, 0), 'end_time' => now()->setTime(17, 0)]);
+    $morning = EventSession::factory()->for($event)->create(['name' => 'Morning', 'start_time' => now()->setTime(7, 0)]);
+    $afternoon = EventSession::factory()->for($event)->create(['name' => 'Afternoon', 'start_time' => now()->setTime(13, 0)]);
 
     $reg = Registration::factory()->for($event)->create();
     Attendance::factory()->for($morning, 'session')->for($reg)->create();
