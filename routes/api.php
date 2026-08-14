@@ -26,7 +26,6 @@ Route::prefix('v1')->group(function () {
         // Reports (nested under events)
         Route::get('reports/attendance', [ReportController::class, 'attendance']);
         Route::get('reports/attendance/export', [ReportController::class, 'export']);
-        Route::post('reports/merge', [ReportController::class, 'merge']);
     });
 
     // Attendance (nested under sessions, but sessions are already under events)

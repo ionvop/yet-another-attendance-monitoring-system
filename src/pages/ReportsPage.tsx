@@ -8,7 +8,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { api, BASE_URL } from "@/lib/api";
 import { toast } from "sonner";
-import MergeReportsDialog from "@/components/MergeReportsDialog";
 import type { ReportData, ReportSession, Session, ApiResponse } from "@/utils/types";
 
 export default function ReportsPage() {
@@ -84,13 +83,10 @@ export default function ReportsPage() {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <MergeReportsDialog />
-          <Button onClick={handleExport}>
-            <Download className="h-4 w-4 mr-2" />
-            Export Excel
-          </Button>
-        </div>
+        <Button onClick={handleExport}>
+          <Download className="h-4 w-4 mr-2" />
+          Export Excel
+        </Button>
       </div>
 
       {/* Session filter */}
