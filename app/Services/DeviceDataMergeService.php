@@ -127,7 +127,6 @@ class DeviceDataMergeService
                 $session = $event->sessions()->create([
                     'name' => $name,
                     'start_time' => $incoming['start_time'] ?? now(),
-                    'end_time' => $incoming['end_time'] ?? now(),
                 ]);
                 $existing->put($name, $session);
                 $sessionMap[$name] = $session;
