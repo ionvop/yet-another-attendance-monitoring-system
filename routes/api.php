@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DeviceMergeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ReportController;
@@ -26,6 +27,11 @@ Route::prefix('v1')->group(function () {
         // Reports (nested under events)
         Route::get('reports/attendance', [ReportController::class, 'attendance']);
         Route::get('reports/attendance/export', [ReportController::class, 'export']);
+
+        // Device data transfer (merge from other devices)
+        Route::get('reports/device/export', [DeviceMergeController::class, 'export']);
+        Route::post('reports/merge/preview', [DeviceMergeController::class, 'preview']);
+        Route::post('reports/merge', [DeviceMergeController::class, 'merge']);
     });
 
     // Attendance (nested under sessions, but sessions are already under events)
