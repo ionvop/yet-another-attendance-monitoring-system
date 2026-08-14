@@ -34,7 +34,6 @@ class DeviceDataExport
             'sessions' => $this->event->sessions->map(fn ($session) => [
                 'name' => $session->name,
                 'start_time' => $session->start_time?->toIso8601String(),
-                'end_time' => $session->end_time?->toIso8601String(),
             ])->values()->all(),
 
             'registrations' => $this->event->registrations->map(fn ($registration) => [
