@@ -171,6 +171,47 @@ export interface ReportData {
 }
 
 // ============================================================
+// Device data merge
+// ============================================================
+
+export interface DeviceMergeSession {
+  name: string;
+  status: "matched" | "unmatched";
+  matched_to: number | null;
+}
+
+export interface DeviceMergeConflict {
+  session: string;
+}
+
+export interface DeviceMergePreview {
+  event: { id: number; name: string };
+  source_event_name: string | null;
+  exported_at: string | null;
+  total_registrations: number;
+  total_attendances: number;
+  sessions: DeviceMergeSession[];
+  new_registrations_count: number;
+  attendances_count: number;
+  conflicts: DeviceMergeConflict[];
+}
+
+export interface DeviceMergeResult {
+  registrations_created: number;
+  sessions_created: number;
+  attendances_created: number;
+  attendances_skipped: number;
+  errors: Array<{
+    student_id: string;
+    session: string;
+    reason: string;
+  }>;
+}
+
+/** Maps an incoming session name to "create" or a master session id. */
+export type SessionMapping = Record<string, string>;
+
+// ============================================================
 // Config
 // ============================================================
 
