@@ -18,7 +18,6 @@ class EventSessionFactory extends Factory
             'event_id' => Event::factory(),
             'name' => fake()->unique()->word() . ' Session',
             'start_time' => $start,
-            'end_time' => (clone $start)->modify('+4 hours'),
         ];
     }
 }
