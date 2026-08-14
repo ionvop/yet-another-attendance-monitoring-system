@@ -246,12 +246,11 @@ List sessions for an event, ordered by `start_time`.
 ```json
 {
   "name": "Morning",
-  "start_time": "2026-08-01T07:00:00Z",
-  "end_time": "2026-08-01T12:00:00Z"
+  "start_time": "2026-08-01T07:00:00Z"
 }
 ```
 
-**Validation:** `name` required, unique per `event_id`. `start_time` required datetime. `end_time` required, must be after `start_time`.
+**Validation:** `name` required, unique per `event_id`. `start_time` required datetime.
 
 **Response 201**
 
