@@ -72,9 +72,7 @@ export default function SessionCard({ session, eventId, onDelete }: Props) {
       <CardContent className="space-y-3">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Clock className="h-3.5 w-3.5" />
-          <span>
-            {formatTime(session.start_time)} — {formatTime(session.end_time)}
-          </span>
+          <span>{formatTime(session.start_time)}</span>
         </div>
         <div className="flex items-center gap-2 text-sm">
           <Users className="h-3.5 w-3.5 text-muted-foreground" />
