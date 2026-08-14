@@ -62,6 +62,12 @@ export default function ReportsPage() {
     toast.success("Export started");
   };
 
+  const handleDeviceExport = () => {
+    const url = `${BASE_URL}/events/${eventId}/reports/device/export`;
+    window.open(url, "_blank");
+    toast.success("Device data export started");
+  };
+
   const toggleSession = (id: string) => {
     setSelectedSessions((prev) =>
       prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
@@ -86,6 +92,10 @@ export default function ReportsPage() {
         </div>
         <div className="flex items-center gap-2">
           <DeviceMergeDialog onMergeComplete={fetchReport} />
+          <Button variant="outline" onClick={handleDeviceExport}>
+            <FileSpreadsheet className="h-4 w-4 mr-2" />
+            Export Device Data
+          </Button>
           <Button onClick={handleExport}>
             <Download className="h-4 w-4 mr-2" />
             Export Excel
