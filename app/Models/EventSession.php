@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['event_id', 'name', 'start_time', 'end_time'])]
+#[Fillable(['event_id', 'name', 'start_time'])]
 class EventSession extends Model
 {
     /** @use HasFactory<EventSessionFactory> */
@@ -30,7 +30,6 @@ class EventSession extends Model
     {
         return [
             'start_time' => 'datetime',
-            'end_time' => 'datetime',
         ];
     }
 }
