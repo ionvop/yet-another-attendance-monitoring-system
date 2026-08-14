@@ -26,7 +26,7 @@ export default function SessionEdit() {
       .finally(() => setLoading(false));
   }, [eventId, sessionId, navigate]);
 
-  const handleSubmit = async (data: { name: string; start_time: string; end_time: string }) => {
+  const handleSubmit = async (data: { name: string; start_time: string }) => {
     setSaving(true);
     setErrors({});
     try {
@@ -82,7 +82,7 @@ export default function SessionEdit() {
           <SessionForm
             initialData={
               session
-                ? { name: session.name, start_time: session.start_time, end_time: session.end_time }
+                ? { name: session.name, start_time: session.start_time }
                 : undefined
             }
             onSubmit={handleSubmit}
