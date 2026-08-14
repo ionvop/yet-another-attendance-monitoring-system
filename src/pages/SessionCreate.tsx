@@ -14,7 +14,7 @@ export default function SessionCreate() {
   const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState<Record<string, string[]>>({});
 
-  const handleSubmit = async (data: { name: string; start_time: string; end_time: string }) => {
+  const handleSubmit = async (data: { name: string; start_time: string }) => {
     setSaving(true);
     setErrors({});
     try {
